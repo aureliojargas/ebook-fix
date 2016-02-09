@@ -78,16 +78,24 @@ sed_script='
 
     /_CodigoFonte/ {
 
+        # insere a tag <pre> no início
         i \
 <pre>
 
+        # inicia o loop
         :fix
-        s/^[[:blank:]]*<p [^>]*>//
-        s/[[:blank:]]*<\/p>$//
+        
+            # remove as tags <p> e </p>
+            s/^[[:blank:]]*<p [^>]*>//
+            s/[[:blank:]]*<\/p>$//
+    
+            # lê a próxima linha
+            n
+            
+            # continua no loop se for uma linha do bloco
+            /_CodigoFonte/ b fix
 
-        n
-        /_CodigoFonte/ b fix
-
+        # insere a tag </pre> no final
         i \
 </pre>
 
