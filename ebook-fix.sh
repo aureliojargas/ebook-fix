@@ -1,4 +1,12 @@
 #!/bin/bash
+# Descompacta, edita e compacta o EPUB do ebook do livro
+# Expressões Regulares http://www.piazinho.com.br
+#
+# Testado no OS X (BSD sed), no GNU seria sed -ri '...'
+#
+# Poderia ser mais eficiente, fazendo um único sed pra não ficar
+# regravando todos os arquivos XHTML várias vezes, mas quem se
+# importa? Funciona e é rápido mesmo assim :)
 
 # Se der qualquer erro, aborte o script
 set -eu
