@@ -119,8 +119,13 @@ sed -E -i '' "$sed_script" "$pasta_xhtml"/*.xhtml
 sed -E -i '' 's/^p._CodigoFonte1 {/pre, &/' "$pasta_xhtml"/css/*
 
 # Remove do PRE as regras do _CodigoFonte1 que não fazem sentido
+# Adiciona ao PRE regras para ficar parecido com o original
 sed -E -i '' '/^p._CodigoFonte1M {/ i \
-pre { text-indent:0; }
+pre {\
+    text-indent: 0;\
+    line-height: 1.5em;\
+    margin-left: 14px;\
+}\
 ' "$pasta_xhtml"/css/*
 
 
