@@ -130,6 +130,7 @@ sed_script='
             text-indent: 0;\
             line-height: 1.5em;\
             margin-left: 14px;\
+            font-size: 0.7em;\
         }\
 '
 sed -E -i '' "$sed_script" "$pasta_xhtml"/css/*
