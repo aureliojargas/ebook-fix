@@ -92,14 +92,14 @@ sed_script='
 
         # inicia o loop
         :fix
-        
+
             # remove as tags <p> e </p>
             s/^[[:blank:]]*<p [^>]*>//
             s/[[:blank:]]*<\/p>$//
-    
+
             # lê a próxima linha
             n
-            
+
             # continua no loop se for uma linha do bloco
             /_CodigoFonte/ b fix
 
@@ -115,18 +115,21 @@ sed_script='
 sed -E -i '' "$sed_script" "$pasta_xhtml"/*.xhtml
 
 
-# Aplica ao PRE as regras do _CodigoFonte1
-sed -E -i '' 's/^p._CodigoFonte1 {/pre, &/' "$pasta_xhtml"/css/*
+# Ajustes de CSS
+sed_script='
+    # Aplica ao PRE as regras do _CodigoFonte1
+    s/^p._CodigoFonte1 {/pre, &/
 
-# Remove do PRE as regras do _CodigoFonte1 que não fazem sentido
-# Adiciona ao PRE regras para ficar parecido com o original
-sed -E -i '' '/^p._CodigoFonte1M {/ i \
-pre {\
-    text-indent: 0;\
-    line-height: 1.5em;\
-    margin-left: 14px;\
-}\
-' "$pasta_xhtml"/css/*
+    # Remove do PRE as regras do _CodigoFonte1 que não fazem sentido
+    # Adiciona ao PRE regras para ficar parecido com o original
+    /^p._CodigoFonte1M {/ i \
+        pre {\
+            text-indent: 0;\
+            line-height: 1.5em;\
+            margin-left: 14px;\
+        }\
+'
+sed -E -i '' "$sed_script" "$pasta_xhtml"/css/*
 
 
 # Remove todas as referências de índice remissivo
