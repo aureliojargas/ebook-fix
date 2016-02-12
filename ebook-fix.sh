@@ -7,6 +7,9 @@
 # Poderia ser mais eficiente, fazendo um único sed pra não ficar
 # regravando todos os arquivos XHTML várias vezes, mas quem se
 # importa? Funciona e é rápido mesmo assim :)
+#
+# Veja também o post no blog sobre este script:
+# http://aurelio.net/blog/2016/02/09/sed-salva/
 
 # Se der qualquer erro, aborte o script
 set -eu
@@ -30,6 +33,7 @@ unzip -q "$epub" -d "$pasta_fix"
 
 # Regex para o início de todas as linhas com códigos fonte
 regex_base='<p class="[^>]*CodigoFonte[^>]*>'
+
 
 # Arruma exceção de espaços antes do tab no início da linha
 #
@@ -65,6 +69,30 @@ sed -E -i ''         "s/(${regex_base})&#9;/\1   /g" "$pasta_xhtml"/*.xhtml
 # Neste ponto, não há mais tabs no início das linhas, somente espaços.
 # Ainda há tabs no meio das linhas, mas deixemos de lado por enquanto.
 
+
+# Ajuste dos blocos de código-fonte, trocando vários <p>...</p>
+# por um único bloco <pre>...</pre>
+#
+# De:
+#     qualquer coisa antes
+#     <p class="_CodigoFontePrimLin1">primeira linha do bloco</p>
+#     <p class="_CodigoFonte1">segunda linha do bloco</p>
+#     <p class="_CodigoFonte1">terceira linha do bloco</p>
+#     ...
+#     <p class="_CodigoFonte1">última linha do bloco</p>
+#     qualquer coisa depois
+#
+# Para:
+#     qualquer coisa antes
+#     <pre>
+#     primeira linha do bloco
+#     segunda linha do bloco
+#     terceira linha do bloco
+#     ...
+#     última linha do bloco
+#     <pre>
+#     qualquer coisa depois
+#
 sed_script='
     ### Ignorar estas
 
@@ -111,7 +139,6 @@ sed_script='
 
     :end
 '
-
 sed -E -i '' "$sed_script" "$pasta_xhtml"/*.xhtml
 
 
