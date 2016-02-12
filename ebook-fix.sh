@@ -171,6 +171,10 @@ sed_script='
             margin-left: 14px;\
             font-size: 0.7em;\
         }\
+        table._TabelaBasica {\
+            margin-top: 0.5em;\
+            margin-bottom: 0.5em;\
+        }\
 '
 sed -E -i '' "$sed_script" "$pasta_xhtml"/css/*
 
