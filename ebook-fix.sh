@@ -117,6 +117,9 @@ sed -E -i '' "$sed_script" "$pasta_xhtml"/*.xhtml
 
 # Ajustes de CSS
 sed_script='
+    # Arruma declaração incorreta de fonte
+    /font-family: *"Ubuntu Mono", serif/ s/serif/monospace/
+
     # Aplica ao PRE as regras do _CodigoFonte1
     s/^p._CodigoFonte1 {/pre, &/
 
