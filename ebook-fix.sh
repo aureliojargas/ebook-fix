@@ -142,6 +142,18 @@ sed_script='
 sed -E -i '' "$sed_script" "$pasta_xhtml"/*.xhtml
 
 
+# Ajuste do ajuste: Não quebra linha após o <pre>,
+# pois aparece uma linha em branco no iBooks.
+#
+# De:                Para:
+#     <pre>                <pre>foo = 1
+#     foo = 1              bar = 2
+#     bar = 2              </pre>
+#     </pre>
+#
+sed -E -i '' '/^<pre>/ { N; s/\n//; }' "$pasta_xhtml"/*.xhtml
+
+
 # Ajustes de CSS
 sed_script='
     # Arruma declaração incorreta de fonte
